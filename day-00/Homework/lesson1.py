@@ -1,7 +1,7 @@
 from turtle import *
 #step 1:   draw a  square
 
-
+color("blue")
 forward(200)
 left(90)
 forward(200)
