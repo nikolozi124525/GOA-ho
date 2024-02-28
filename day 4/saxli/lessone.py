@@ -1,5 +1,8 @@
 
 from turtle import *
+color()
+speed(0)
+
 
 forward(200)
 left(90)
@@ -288,10 +291,10 @@ forward(30)
 left(90) 
 forward(43)
 left(90)
-forward(80)
+forward(70)
 
-
-
+left(90)
+forward(43)
 
 
 
