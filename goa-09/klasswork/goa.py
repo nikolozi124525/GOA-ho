@@ -1,7 +1,7 @@
 
-#print( range(7,21))
-#print(range(8,10))
-#print(range(10,20))
+print( range(7,21))
+print(range(8,10))
+print(range(10,20))
 
 #
 
