@@ -1,6 +1,6 @@
 from turtle import *
 #step 1:   draw a  square
-
+speed(0)
 color("blue")
 forward(200)
 left(90)
