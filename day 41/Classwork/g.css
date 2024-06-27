@@ -1,0 +1,55 @@
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.parent {
+    width: 700px;
+    height: 500px;
+
+    background-image: url('./derch-4CMq1GxDSPA-unsplash.jpg');
+    background-size: cover;
+    background-position: center;
+
+    border-radius: 40px;
+
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 390px;
+
+    box-shadow: 0 0 200px rgb(24, 106, 141);
+    color: white;
+
+    text-align: center;
+
+    overflow: hidden;
+    cursor: pointer;
+    transition: 0.35s;
+}
+
+.parent:hover {
+    width: 800px;
+    border: 2px solid black;
+    
+}
+
+.parent:active {
+    width: 600px;
+}
+
+
+.child {
+    padding-top: 160px;
+    height: 100%;
+    background-color: rgba(0, 179, 255, 0.455);
+    text-shadow: 5px 10px 40px black;
+}
+
+.child h1 {
+    font-size: 100px;
+}
+
+.child p {
+    font-size: 30px;
+}
