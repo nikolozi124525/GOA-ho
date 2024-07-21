@@ -1,0 +1,25 @@
+*  {
+    margin: 5;
+    padding: 5;
+    box-sizing: border-box;
+}
+
+body {
+
+     display: flex;
+     justify-content: center;
+    align-items: center;
+}
+
+
+div {
+
+     width: 350px;
+    height: 700px;
+    background-color: blue;
+
+    transform: scale(0,5);
+
+}
+
+
