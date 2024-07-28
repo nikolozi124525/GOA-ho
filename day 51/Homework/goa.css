@@ -1,0 +1,55 @@
+*  {
+    margin: 5;
+    padding: 5;
+    box-sizing: border-box;
+}
+
+body {
+
+     display: flex;
+     justify-content: center;
+    align-items: center;
+}
+
+
+div {
+
+     width: 300px;
+    height: 600px; ;
+    background-color: blue;
+
+    
+    animation-name: firstanimation;
+    animation-duration: 10s;
+    animation-iteration-count:infinite ;
+
+}
+
+@keyframes firstanimation{
+ 
+   0%  {
+        transform:rotate (0deg) ; 
+  }
+
+  20%  {
+        transform: rotate(-40deg);
+  }
+
+  40%  {
+        transform: rotate(40deg);
+  }
+
+  60% {
+       transform: rotate(-190deg);
+  }
+
+  80% {
+       transform: rotate(190deg);
+  } 
+ 100% {
+      transform: rotate(-360deg);
+ }
+
+
+
+}
