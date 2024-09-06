@@ -1,3 +1,4 @@
+
 let n = myfuntion(4, 2);
 
 
@@ -6,6 +7,5 @@ function myfuntion(a, b){
 }
 
 console.log(n)
-
 
 
