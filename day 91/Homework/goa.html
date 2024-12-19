@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Store</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .book-card {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin: 10px;
+            display: inline-block;
+            width: 250px;
+            vertical-align: top;
+        }
+        .button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+        }
+        .remove-button {
+            background-color: #FF6347;
+            color: white;
+            padding: 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+        }
+        #book-list, #collection-list {
+            display: flex;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to the Book Store</h1>
+
+    <div>
+        <h2>Book Store</h2>
+        <div id="book-list"></div>
+    </div>
+
+    <hr>
+
+    <div>
+        <h2>Your Collection</h2>
+        <div id="collection-list"></div>
+    </div>
+
+    <script>
+        // ფუქნცია მაღაზიის წიგნების მისაღებად
+        function loadBooks() {
+            fetch('http://localhost:3000/api/books')
+                .then(response => response.json())
+                .then(data => {
+                    const bookList = document.getElementById('book-list');
+                    bookList.innerHTML = ''; // სუფთა მდგომარეობაში გადაყვანა
+                    Object.keys(data).forEach(bookId => {
+                        const book = data[bookId];
+                        const bookCard = document.createElement('div');
+                        bookCard.className = 'book-card';
+                        bookCard.innerHTML = `
+                            <h3>${book.title}</h3>
+                            <p>Author: ${book.author}</p>
+                            <p>Genre: ${book.genre}</p>
+                            <p>Price: $${book.price}</p>
+                            <p>${book.description}</p>
+                            <button class="button" onclick="addToCollection(${bookId})">Add to Collection</button>
+                        `;
+                        bookList.appendChild(bookCard);
+                    });
+                });
+        }
+
+        // ფუნქცია წიგნის კოლექციაში დამატებისთვის
+        function addToCollection(bookId) {
+            fetch(`http://localhost:3000/api/add_to_collection/${bookId}`, {
+                method: 'POST',
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                loadBooks();
+                loadCollection();
+            });
+        }
+
+        // პერსონალური კოლექციის გადმოწერა
+        function loadCollection() {
+            fetch('http://localhost:3000/api/collection')
+                .then(response => response.json())
+                .then(data => {
+                    const collectionList = document.getElementById('collection-list');
+                    collectionList.innerHTML = '';
+                    Object.keys(data).forEach(bookId => {
+                        const book = data[bookId];
+                        const bookCard = document.createElement('div');
+                        bookCard.className = 'book-card';
+                        bookCard.innerHTML = `
+                            <h3>${book.title}</h3>
+                            <p>Author: ${book.author}</p>
+                            <p>Genre: ${book.genre}</p>
+                            <p>Price: $${book.price}</p>
+                            <p>${book.description}</p>
+                            <button class="remove-button" onclick="removeFromCollection(${bookId})">Remove from Collection</button>
+                        `;
+                        collectionList.appendChild(bookCard);
+                    });
+                });
+        }
+
+        // ფუნქცია წიგნის კოლექციიდან წაშლისთვის
+        function removeFromCollection(bookId) {
+            fetch(`http://localhost:3000/api/remove_from_collection/${bookId}`, {
+                method: 'DELETE',
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                loadCollection();
+            });
+        }
+
+        // თავიდან გავუშვათ ფუნქციები
+        loadBooks();
+        loadCollection();
+    </script>
+</body>
+</html>
