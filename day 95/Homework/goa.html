@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> მონაცემები</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    h1 {
+      color: #4CAF50;
+    }
+
+    form {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin: 10px 0 5px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    #userData {
+      margin-top: 20px;
+    }
+
+    #userList {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    #userList li {
+      padding: 10px;
+      border: 1px solid #ccc;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1> მონაცემები</h1>
+  
+  <form id="userForm">
+    <label for="firstName">სახელი:</label>
+    <input type="text" id="firstName" required>
+
+    <label for="lastName">გვარი:</label>
+    <input type="text" id="lastName" required>
+
+    <label for="age">ასაკი:</label>
+    <input type="number" id="age" required>
+
+    <label for="idNumber">პირადი ნომერი (ID):</label>
+    <input type="text" id="idNumber" required>
+
+    <label for="height">სიმაღლე:</label>
+    <input type="number" id="height" required>
+
+    <label for="description">აღწერა:</label>
+    <textarea id="description" required></textarea>
+
+    <button type="submit">მონაცემების დამატება</button>
+  </form>
+
+  <div id="userData">
+    <h2>მონაცემები</h2>
+    <ul id="userList"></ul>
+  </div>
+
+  <script>
+    document.getElementById("userForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const firstName = document.getElementById("firstName").value;
+      const lastName = document.getElementById("lastName").value;
+      const age = document.getElementById("age").value;
+      const idNumber = document.getElementById("idNumber").value;
+      const height = document.getElementById("height").value;
+      const description = document.getElementById("description").value;
+
+     
+      const randomPart = Math.floor(Math.random() * 1000); 
+      const email = `${firstName.toLowerCase()}.${lastName.toLowerCase()}.${age}${randomPart}@example.com`;
+
+    
+      const userData = `
+        <li>
+          <strong>სახელი:</strong> ${firstName}<br>
+          <strong>გვარი:</strong> ${lastName}<br>
+          <strong>ასაკი:</strong> ${age}<br>
+          <strong>პირადი ნომერი (ID):</strong> ${idNumber}<br>
+          <strong>სიმაღლე:</strong> ${height} სმ<br>
+          <strong>აღწერა:</strong> ${description}<br>
+          <strong>ელ. ფოსტა:</strong> ${email}
+        </li>
+      `;
+
+      document.getElementById("userList").insertAdjacentHTML("beforeend", userData);
+
+   
+      document.getElementById("userForm").reset();
+    });
+  </script>
+</body>
+</html>
