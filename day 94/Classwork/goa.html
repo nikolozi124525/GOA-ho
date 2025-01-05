@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Divided Circle with Equal Parts</title>
+    <style>
+       
+        body {
+            background-color: #B8F4A6;
+            display: flex;
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            margin: 0; 
+        }
+
+        
+        .circle {
+            position: relative;
+            width: 250px; 
+            height: 250px;
+            border-radius: 60%; 
+            background-color: #3BA44D; 
+        }
+
+       
+        .line {
+            position: absolute;
+            background-color: #B8F4A6; 
+            width: 50px; 
+            height: 100%; 
+            top: 0;
+            left: 50%; 
+            transform: translateX(-50%);  */
+        }
+
+    
+        .line-horizontal {
+            position: absolute;
+            background-color: #B8F4A6; 
+            height: 50px;
+            width: 100%; 
+            top: 43%; 
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+
+   
+    <div class="circle">
+        <div class="line"></div> 
+        <div class="line-horizontal"></div> 
+    </div>
+
+</body>
+</html>
