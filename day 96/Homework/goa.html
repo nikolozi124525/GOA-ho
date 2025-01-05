@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Counter with Local Storage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        h1 {
+            font-size: 3em;
+        }
+        button {
+            font-size: 1.2em;
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>Counter: <span id="counter">0</span></h1>
+        <button id="increase">Increase</button>
+        <button id="decrease">Decrease</button>
+    </div>
+
+    <script>
+        
+        const counterDisplay = document.getElementById('counter');
+
+       
+        let counterValue = localStorage.getItem('counter');
+        if (counterValue === null) {
+            counterValue = 0;
+        } else {
+            counterValue = parseInt(counterValue, 10); 
+        }
+
+   
+        counterDisplay.textContent = counterValue;
+        document.getElementById('increase').addEventListener('click', () => {
+            counterValue++;
+            counterDisplay.textContent = counterValue;
+            localStorage.setItem('counter', counterValue); 
+        });
+
+        document.getElementById('decrease').addEventListener('click', () => {
+            counterValue--;
+            counterDisplay.textContent = counterValue;
+            localStorage.setItem('counter', counterValue); 
+        });
+    </script>
+</body>
+</html>
