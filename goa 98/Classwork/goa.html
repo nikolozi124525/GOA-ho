@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Persistent Background Color</title>
+</head>
+<body>
+
+    <label for="colorPicker">Choose Background Color:</label>
+    <input type="color" id="colorPicker">
+    <button id="colorButton">Change Background Color</button>
+
+    <script>
+       
+        function changeColor(color) {
+            document.body.style.backgroundColor = color;
+          
+            localStorage.setItem('backgroundColor', color);
+        }
+
+       
+        window.onload = function() {
+            const savedColor = localStorage.getItem('backgroundColor');
+            if (savedColor) {
+                
+                document.body.style.backgroundColor = savedColor;
+            }
+        };
+
+      
+        document.getElementById('colorPicker').addEventListener('input', function(event) {
+            const selectedColor = event.target.value;
+            changeColor(selectedColor);
+        });
+
+      
+        document.getElementById('colorButton').addEventListener('click', function() {
+            const color = document.getElementById('colorPicker').value;
+            changeColor(color);
+        });
+    </script>
+
+</body>
+</html>
+
