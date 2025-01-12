@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>რეგისტრაციის ფორმა</title>
+    <style>
+       
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #e0bbff, #ffffff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        
+        .container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px 30px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+   
+        h1 {
+            color: #6a1b9a;
+            margin-bottom: 20px;
+        }
+
+       
+        form label {
+            display: block;
+            margin-top: 15px;
+            font-size: 1rem;
+            color: #333;
+        }
+
+        form input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+   
+        form button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #6a1b9a;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        form button:hover {
+            background-color: #4a0072;
+        }
+
+   
+        .home-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+            margin-top: 20px;
+        }
+
+        .bag-card {
+            width: 200px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            margin: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .bag-card img {
+            max-width: 100%;
+            border-radius: 10px;
+        }
+
+        .bag-card h3 {
+            color: #6a1b9a;
+            font-size: 1.2rem;
+        }
+
+        .bag-card p {
+            font-size: 1rem;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>რეგისტრაციის ფორმა</h1>
+        <form id="registrationForm">
+            <label for="firstName">სახელი:</label>
+            <input type="text" id="firstName" name="firstName" required>
+
+            <label for="lastName">გვარი:</label>
+            <input type="text" id="lastName" name="lastName" required>
+
+            <label for="age">ასაკი:</label>
+            <input type="number" id="age" name="age" min="0" required>
+
+            <button type="submit">დარეგისტრირება</button>
+        </form>
+    </div>
+
+    <script>
+   
+        document.getElementById('registrationForm').addEventListener('submit', function(event) {
+            event.preventDefault(); 
+            
+           
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const age = document.getElementById('age').value;
+
+            
+            alert(`სახელი: ${firstName}\nგვარი: ${lastName}\nასაკი: ${age}`);
+            
+        
+            document.body.innerHTML = ` 
+                <div class="home-container">
+                    <div class="bag-card">
+                        <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.mymarket.ge%2Fka%2Fpr%2F11253490%2FCanTebi-Cemodnebi%2FzurgCanTa-adidas-102-4-zurgCanTebi-CanTa-CanTebi%2F&psig=AOvVaw0d0mGSZ3At8r8q8N9QOdTJ&ust=1734369421941000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCLDxuOCjqooDFQAAAAAdAAAAABAE/.com" alt="ჩანთა 1">
+                        <h3>ჩანთა 1</h3>
+                        <p>ფასი: 100 ლარი</p>
+                    </div>
+                    <div class="bag-card">
+                        <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwebmall.ge%2Fproduct%2Fchanta-heads%2F&psig=AOvVaw0d0mGSZ3At8r8q8N9QOdTJ&ust=1734369421941000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCLDxuOCjqooDFQAAAAAdAAAAABAK/.com" alt="ჩანთა 2">
+                        <h3>ჩანთა 2</h3>
+                        <p>ფასი: 120 ლარი</p>
+                    </div>
+                    <div class="bag-card">
+                        <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.citrus.ge%2Fcategory%2Fskolis-chantebi&psig=AOvVaw0d0mGSZ3At8r8q8N9QOdTJ&ust=1734369421941000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCLDxuOCjqooDFQAAAAAdAAAAABAQ/.com
+                        // " alt="ჩანთა 3">
+                        <h3>ჩანთა 3</h3>
+                        <p>ფასი: 150 ლარი</p>
+                    </div>
+                </div>
+            `;
+        });
+    </script>
+</body>
+</html>
