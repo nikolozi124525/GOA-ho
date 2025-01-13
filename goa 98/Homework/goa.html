@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>მომხმარებლის საიტი</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        #name-form, #game-section {
+            display: none;
+        }
+        #game-section {
+            margin-top: 20px;
+        }
+        #color-picker {
+            margin: 10px;
+        }
+        #score {
+            font-size: 24px;
+            margin: 10px;
+        }
+        #guess-input {
+            margin: 10px;
+        }
+        #message {
+            margin-top: 10px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="name-form">
+        <h1>გთხოვთ შეიყვანოთ თქვენი სახელი:</h1>
+        <input type="text" id="user-name" placeholder="თქვენი სახელი" required>
+        <button onclick="startGame()">დაწყება</button>
+    </div>
+
+    <div id="game-section">
+        <h1>გამარჯობა, <span id="display-name"></span>!</h1>
+        <div id="score">ქულა: <span id="score-value">0</span></div>
+        <input type="color" id="color-picker" onchange="changeBackgroundColor()">
+        <div>
+            <label for="guess-input">გამოიცანით რიცხვი:</label>
+            <input type="number" id="guess-input">
+            <button onclick="checkGuess()">შედგეს</button>
+        </div>
+        <div id="message"></div>
+    </div>
+
+    <script>
+       
+
+        let userName = '';
+        let score = 0;
+        let difficulty = 2; 
+        let targetNumber = generateRandomNumber();
+        let attempts = 0;
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const nameForm = document.getElementById('name-form');
+            const gameSection = document.getElementById('game-section');
+            const displayName = document.getElementById('display-name');
+            const scoreValue = document.getElementById('score-value');
+            
+           
+            if (!localStorage.getItem('userName')) {
+                nameForm.style.display = 'block';
+            } else {
+                startGame();
+            }
+
+            function startGame() {
+                userName = document.getElementById('user-name').value.trim();
+                
+                if (userName) {
+                    localStorage.setItem('userName', userName);
+                    displayName.textContent = userName;
+                    nameForm.style.display = 'none';
+                    gameSection.style.display = 'block';
+                }
+            }
+
+            function generateRandomNumber() {
+                return Math.floor(Math.random() * difficulty) + 1;
+            }
+
+            window.changeBackgroundColor = function () {
+                document.body.style.backgroundColor = document.getElementById('color-picker').value;
+            };
+
+            window.checkGuess = function () {
+                const guess = parseInt(document.getElementById('guess-input').value);
+
+                if (guess === targetNumber) {
+                    score++;
+                    scoreValue.textContent = score;
+                    attempts = 0;
+                    targetNumber = generateRandomNumber();
+                    difficulty = Math.min(difficulty * 2, 100); 
+                    localStorage.setItem('score', score);
+                    document.getElementById('message').textContent = 'წარმატება!';
+                } else {
+                    attempts++;
+                    document.getElementById('message').textContent = 'ცდები ისევ!';
+                    if (attempts >= 3) {
+                        
+                        attempts = 0;
+                        targetNumber = generateRandomNumber();
+                        difficulty = Math.min(difficulty * 2, 100); 
+                    }
+                }
+            };
+        });
+    </script>
+
+</body>
+</html>
