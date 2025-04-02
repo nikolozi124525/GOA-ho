@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To-Do List</title>
+</head>
+<body>
+  <h2>To-Do List</h2>
+  <input type="text" id="taskInput" placeholder="Enter a task" />
+  <button onclick="addTask()">Add Task</button>
+  <ul id="taskList"></ul>
+
+  <script>
+    async function addTask() {
+      const taskInput = document.getElementById('taskInput');
+      const taskList = document.getElementById('taskList');
+      const task = taskInput.value.trim();
+
+      if (task === "") {
+        alert("Please enter a task.");
+        return;
+      }
+
+      const li = document.createElement('li');
+      li.textContent = task;
+
+      const deleteBtn = document.createElement('button');
+      deleteBtn.textContent = "Delete";
+      deleteBtn.onclick = async () => {
+        li.remove();
+      };
+
+      li.appendChild(deleteBtn);
+      taskList.appendChild(li);
+
+      taskInput.value = ''; 
+    }
+  </script>
+</body>
+</html>

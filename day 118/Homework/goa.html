@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Form</title>
+  <style>
+  
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7f7f7;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #555;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+
+    textarea {
+      height: 150px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    #form-message {
+      margin-top: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Contact Us</h1>
+    <form id="contact-form">
+      
+      <label for="name">Your Name</label>
+      <input type="text" id="name" name="name" placeholder="Enter your name" required />
+
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" placeholder="Enter your email" required />
+
+   
+      <label for="phone">Phone Number</label>
+      <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" />
+
+      <label for="message">Your Message</label>
+      <textarea id="message" name="message" placeholder="Enter your message" required></textarea>
+
+
+      <button type="submit">Send Message</button>
+    </form>
+    <div id="form-message"></div>
+  </div>
+
+  <script>
+   
+    document.getElementById('contact-form').addEventListener('submit', function(event) {
+      event.preventDefault(); 
+
+      
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const message = document.getElementById('message').value.trim();
+
+    
+      let valid = true;
+      let errorMessage = '';
+
+      if (name === '') {
+        valid = false;
+        errorMessage += 'Please enter your name. <br>';
+      }
+
+      const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+      if (email === '') {
+        valid = false;
+        errorMessage += 'Please enter your email. <br>';
+      } else if (!emailPattern.test(email)) {
+        valid = false;
+        errorMessage += 'Please enter a valid email address. <br>';
+      }
+
+   
+      const phonePattern = /^[0-9]{3}-[0-9]{3}-[0-9]{4}$/;
+      if (phone && !phonePattern.test(phone)) {
+        valid = false;
+        errorMessage += 'Please enter a valid phone number (XXX-XXX-XXXX). <br>';
+      }
+
+      
+      if (message === '') {
+        valid = false;
+        errorMessage += 'Please enter your message. <br>';
+      }
+
+      const formMessage = document.getElementById('form-message');
+      if (valid) {
+        formMessage.innerHTML = '<p style="color: green;">Thank you for contacting us. We will get back to you shortly.</p>';
+      
+        document.getElementById('contact-form').reset();
+      } else {
+        formMessage.innerHTML = '<p style="color: red;">' + errorMessage + '</p>';
+      }
+    });
+  </script>
+</body>
+</html>
