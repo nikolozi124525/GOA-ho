@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+  <meta charset="UTF-8">
+  <title>ონლაინ მაღაზია</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    .product { border: 1px solid #ccc; padding: 10px; margin: 10px 0; }
+    #cart { margin-top: 30px; }
+    input { display: block; margin: 10px 0; padding: 5px; }
+  </style>
+</head>
+<body>
+
+  <div id="auth-section">
+    <h2>რეგისტრაცია</h2>
+    <input type="text" id="reg-username" placeholder="მომხმარებელი">
+    <input type="password" id="reg-password" placeholder="პაროლი">
+    <button id="register-btn">რეგისტრაცია</button>
+
+    <h2>შესვლა</h2>
+    <input type="text" id="login-username" placeholder="მომხმარებელი">
+    <input type="password" id="login-password" placeholder="პაროლი">
+    <button id="login-btn">შესვლა</button>
+  </div>
+
+  <div id="main-section" style="display: none;">
+    <h1>მაღაზია</h1>
+    <div id="products"></div>
+
+    <h2>კალათა</h2>
+    <div id="cart"></div>
+  </div>
+
+  <script type="module">
+    // Product.js
+    const products = [
+      { id: 1, name: "ლეპტოპი", price: 2500 },
+      { id: 2, name: "სმარტფონი", price: 1200 },
+      { id: 3, name: "ყურსასმენები", price: 150 },
+    ];
+
+    function getProductById(id) {
+      return products.find(p => p.id === id);
+    }
+
+    function renderProducts(container, addToCartCallback) {
+      container.innerHTML = "";
+      products.forEach(product => {
+        const div = document.createElement('div');
+        div.classList.add('product');
+        div.innerHTML = `
+          <h3>${product.name}</h3>
+          <p>ფასი: ${product.price} ₾</p>
+          <button data-id="${product.id}">დამატება კალათაში</button>
+        `;
+        div.querySelector("button").addEventListener("click", () => addToCartCallback(product.id));
+        container.appendChild(div);
+      });
+    }
+
+    // Cart.js
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    function addToCart(productId) {
+      const product = getProductById(productId);
+      if (product) {
+        cart.push(product);
+        localStorage.setItem("cart", JSON.stringify(cart));
+        renderCart();
+      }
+    }
+
+    function renderCart() {
+      const container = document.getElementById("cart");
+      container.innerHTML = "";
+
+      if (cart.length === 0) {
+        container.textContent = "კალათა ცარიელია.";
+        return;
+      }
+
+      let total = 0;
+      cart.forEach(item => {
+        const itemDiv = document.createElement("div");
+        itemDiv.textContent = `${item.name} - ${item.price} ₾`;
+        container.appendChild(itemDiv);
+        total += item.price;
+      });
+
+      const totalDiv = document.createElement("div");
+      totalDiv.innerHTML = `<strong>სულ: ${total} ₾</strong>`;
+      container.appendChild(totalDiv);
+    }
+
+    // Auth.js
+    function register(username, password) {
+      localStorage.setItem("user", JSON.stringify({ username, password }));
+      showMainPage();
+    }
+
+    function login(username, password) {
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (user && user.username === username && user.password === password) {
+        showMainPage();
+      } else {
+        alert("შეიყვანეთ სწორი მონაცემები");
+      }
+    }
+
+    function isAuthenticated() {
+      return !!localStorage.getItem("user");
+    }
+
+    function showMainPage() {
+      document.getElementById("auth-section").style.display = "none";
+      document.getElementById("main-section").style.display = "block";
+      renderProducts(document.getElementById("products"), addToCart);
+      renderCart();
+    }
+
+    // Main.js (Init)
+    document.getElementById("register-btn").addEventListener("click", () => {
+      const username = document.getElementById("reg-username").value;
+      const password = document.getElementById("reg-password").value;
+      register(username, password);
+    });
+
+    document.getElementById("login-btn").addEventListener("click", () => {
+      const username = document.getElementById("login-username").value;
+      const password = document.getElementById("login-password").value;
+      login(username, password);
+    });
+
+    if (isAuthenticated()) {
+      showMainPage();
+    }
+  </script>
+</body>
+</html>

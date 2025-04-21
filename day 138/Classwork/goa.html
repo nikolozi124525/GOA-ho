@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Div Animation and Flex</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0); }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .bounce {
+            animation: bounce 1s infinite;
+        }
+
+        .spin {
+            animation: spin 2s linear infinite;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex justify-center items-center min-h-screen">
+
+    <div class="flex flex-wrap gap-6 justify-center items-center">
+
+        <div class="w-64 h-64 bg-red-500 text-white text-2xl flex justify-center items-center rounded-lg">
+            Large Red Box
+        </div>
+
+        <div class="w-48 h-48 bg-blue-500 text-white text-xl flex justify-center items-center rounded-lg">
+            Medium Blue Box
+        </div>
+
+        <div class="w-32 h-32 bg-green-500 text-white text-lg flex justify-center items-center rounded-lg bounce">
+            Small Green Box
+        </div>
+
+        <div class="w-48 h-48 bg-yellow-500 text-white text-xl flex justify-center items-center rounded-lg spin">
+            Spinning Box
+        </div>
+
+        <div class="w-80 h-80 bg-purple-500 text-white text-3xl flex justify-center items-center rounded-lg">
+            Extra Large Purple Box
+        </div>
+
+    </div>
+
+</body>
+</html>

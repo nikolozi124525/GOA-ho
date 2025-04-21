@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sweet Treats Shop</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+        }
+        button {
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #f05682;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans">
+
+
+    <header class="bg-pink-500 text-white py-6">
+        <div class="container mx-auto text-center">
+            <h1 class="text-4xl font-bold">Sweet Treats</h1>
+            <p class="text-xl">Delicious Desserts for You!</p>
+        </div>
+    </header>
+
+
+    <main class="container mx-auto p-6">
+        <section class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            
+  
+            <div class="bg-white p-4 rounded-lg shadow-lg hover:shadow-2xl transition">
+                <img src="https://images.unsplash.com/photo-1614729308955-b76fc7b763b1?crop=entropy&cs=tinysrgb&fit=max&ixid=MnwzNjUyOXwwfDF8c2VhY2h8MjF8fGRlc3NlcnR8ZW58MHx8fHwxNjQwMzMwNzM1&ixlib=rb-1.2.1&q=80&w=400" alt="Chocolate Cake" class="w-full h-48 object-cover rounded-lg">
+                <h3 class="text-xl font-semibold mt-4">Chocolate Cake</h3>
+                <p class="text-gray-500 mt-2">$10</p>
+                <button onclick="addToCart('Chocolate Cake', 10)" class="mt-4 bg-pink-500 text-white py-2 px-4 rounded-full">Add to Cart</button>
+            </div>
+
+     
+            <div class="bg-white p-4 rounded-lg shadow-lg hover:shadow-2xl transition">
+                <img src="https://images.unsplash.com/photo-1596017115289-bfa4dbf19d01?crop=entropy&cs=tinysrgb&fit=max&ixid=MXwyMDg2NHwwfDF8c2VhY2h8NjJ8fGZvb2R8ZW58MHx8fHwxNjM5NDI1ODc1&ixlib=rb-1.2.1&q=80&w=400" alt="Strawberry Cheesecake" class="w-full h-48 object-cover rounded-lg">
+                <h3 class="text-xl font-semibold mt-4">Strawberry Cheesecake</h3>
+                <p class="text-gray-500 mt-2">$12</p>
+                <button onclick="addToCart('Strawberry Cheesecake', 12)" class="mt-4 bg-pink-500 text-white py-2 px-4 rounded-full">Add to Cart</button>
+            </div>
+
+         
+            <div class="bg-white p-4 rounded-lg shadow-lg hover:shadow-2xl transition">
+                <img src="https://images.unsplash.com/photo-1576613292297-65897b1f7bbf?crop=entropy&cs=tinysrgb&fit=max&ixid=MXwyMDg2NHwwfDF8c2VhY2h8Nzd8fGNhc2t8ZW58MHx8fHwxNjM5NDE3NzEy&ixlib=rb-1.2.1&q=80&w=400" alt="Vanilla Cupcake" class="w-full h-48 object-cover rounded-lg">
+                <h3 class="text-xl font-semibold mt-4">Vanilla Cupcake</h3>
+                <p class="text-gray-500 mt-2">$6</p>
+                <button onclick="addToCart('Vanilla Cupcake', 6)" class="mt-4 bg-pink-500 text-white py-2 px-4 rounded-full">Add to Cart</button>
+            </div>
+
+            
+            <div class="bg-white p-4 rounded-lg shadow-lg hover:shadow-2xl transition">
+                <img src="https://images.unsplash.com/photo-1576621501147-1b165c376d7a?crop=entropy&cs=tinysrgb&fit=max&ixid=MXwyMDg2NHwwfDF8c2VhY2h8NjV8fGxlbW9uJTIwdGFydHxlbnwwfHx8fHwxNjM5NDE3Nzk4&ixlib=rb-1.2.1&q=80&w=400" alt="Lemon Tart" class="w-full h-48 object-cover rounded-lg">
+                <h3 class="text-xl font-semibold mt-4">Lemon Tart</h3>
+                <p class="text-gray-500 mt-2">$8</p>
+                <button onclick="addToCart('Lemon Tart', 8)" class="mt-4 bg-pink-500 text-white py-2 px-4 rounded-full">Add to Cart</button>
+            </div>
+
+        </section>
+
+      
+        <div class="mt-6 text-center">
+            <button onclick="toggleCart()" class="bg-pink-500 text-white py-2 px-4 rounded-full">View Cart</button>
+        </div>
+
+       
+        <div id="cartModal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center hidden">
+            <div class="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
+                <h2 class="text-2xl font-bold mb-4">Your Cart</h2>
+                <ul id="cartItems" class="space-y-4"></ul>
+                <div class="flex justify-between items-center">
+                    <p class="text-lg font-semibold">Total Price: $<span id="totalPrice">0</span></p>
+                    <button onclick="clearCart()" class="bg-red-500 text-white py-2 px-4 rounded-full">Clear Cart</button>
+                </div>
+                <button onclick="toggleCart()" class="mt-4 bg-gray-500 text-white py-2 px-4 rounded-full">Close</button>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        let cart = [];
+        let totalPrice = 0;
+
+        function addToCart(dessert, price) {
+           
+            cart.push({ dessert, price });
+            totalPrice += price;
+            updateCart();
+        }
+
+        function updateCart() {
+          
+            const cartItems = document.getElementById('cartItems');
+            cartItems.innerHTML = '';
+
+            cart.forEach(item => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `${item.dessert} - $${item.price}`;
+                cartItems.appendChild(listItem);
+            });
+
+            const total = document.getElementById('totalPrice');
+            total.textContent = totalPrice;
+        }
+
+        function toggleCart() {
+        
+            const cartModal = document.getElementById('cartModal');
+            cartModal.classList.toggle('hidden');
+        }
+
+        function clearCart() {
+           
+            cart = [];
+            totalPrice = 0;
+            updateCart();
+            toggleCart();
+        }
+    </script>
+
+</body>
+</html>
