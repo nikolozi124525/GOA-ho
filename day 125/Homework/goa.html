@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Message Queue</title>
+</head>
+<body>
+  <input id="message" placeholder="მესიჯი" />
+  <input id="delay" type="number" placeholder="დაგვიანება (ms)" />
+  <button onclick="addToQueue()">დამატება</button>
+
+  <div id="output" style="margin-top: 20px;"></div>
+
+  <script>
+    const queue = [];
+    let isProcessing = false;
+
+    function addToQueue() {
+      const message = document.getElementById("message").value;
+      const delay = parseInt(document.getElementById("delay").value);
+      if (!message || isNaN(delay)) return;
+      queue.push({ message, delay });
+      processQueue();
+    }
+
+    async function processQueue() {
+      if (isProcessing) return;
+      isProcessing = true;
+
+      while (queue.length > 0) {
+        const { message, delay } = queue.shift();
+        await new Promise(resolve => setTimeout(resolve, delay));
+        const output = document.getElementById("output");
+        const div = document.createElement("div");
+        div.textContent = message;
+        output.appendChild(div);
+        console.log(message);
+      }
+
+      isProcessing = false;
+    }
+  </script>
+</body>
+</html>

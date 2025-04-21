@@ -1,0 +1,18 @@
+<input type="text" id="nameInput" placeholder="შეიყვანე შენი სახელი">
+<button onclick="startProcess()">დაწყება</button>
+<p id="output"></p>
+
+<script>
+  function congratulateUser(name, callback) {
+    setTimeout(() => {
+      callback(`გილოცავ, ${name}! შენ დაეხმარე პროცესის წარმატებით დასრულებაში 🎉`);
+    }, 3000);
+  }
+
+  function startProcess() {
+    const name = document.getElementById("nameInput").value;
+    congratulateUser(name, (message) => {
+      document.getElementById("output").innerText = message;
+    });
+  }
+</script>

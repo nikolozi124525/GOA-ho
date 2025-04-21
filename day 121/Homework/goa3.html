@@ -1,0 +1,15 @@
+<p id="text">ეს ტექსტია</p>
+
+<script>
+  function changeColor(color, callback) {
+    setTimeout(() => {
+      callback(color);
+    }, 2000);
+  }
+
+  changeColor("red", (color) => {
+    document.getElementById("text").style.color = color;
+    console.log("ფერი წარმატებით შეიცვალა!");
+  });
+</script>
+

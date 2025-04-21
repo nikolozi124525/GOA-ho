@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+  <meta charset="UTF-8">
+  <title>უახლესი ამბები</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      width: 100%;
+      max-width: 800px;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    .news-item {
+      margin-bottom: 20px;
+      padding: 15px;
+      background-color: #f9f9f9;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .news-item h3 {
+      margin: 0;
+      font-size: 1.2em;
+      color: #333;
+    }
+    .news-item p {
+      font-size: 1em;
+      color: #555;
+    }
+    .news-item a {
+      color: #007BFF;
+      text-decoration: none;
+    }
+    .news-item a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>უახლესი ამბები</h1>
+    <input type="text" id="searchQuery" placeholder="ძიება..." oninput="fetchNews()">
+    <div id="newsContainer"></div>
+  </div>
+
+  <script>
+    const apiKey = 'YOUR_API_KEY'; 
+
+    async function fetchNews(query = '') {
+      const url = `https://newsapi.org/v2/top-headlines?country=us&q=${query}&apiKey=${apiKey}`;
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        displayNews(data.articles);
+      } catch (error) {
+        console.error('შეცდომა მონაცემების მიღებისას:', error);
+      }
+    }
+
+    function displayNews(articles) {
+      const newsContainer = document.getElementById('newsContainer');
+      newsContainer.innerHTML = '';
+      if (articles.length === 0) {
+        newsContainer.innerHTML = '<p>არაფერი მოიძებნა.</p>';
+        return;
+      }
+      articles.forEach(article => {
+        const newsItem = document.createElement('div');
+        newsItem.classList.add('news-item');
+        newsItem.innerHTML = `
+          <h3><a href="${article.url}" target="_blank">${article.title}</a></h3>
+          <p>${article.description || 'აღწერა არ არის ხელმისაწვდომი'}</p>
+        `;
+        newsContainer.appendChild(newsItem);
+      });
+    }
+
+    fetchNews();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animal Image Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f8ff;
+            padding: 50px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        #image-container {
+            margin-top: 20px;
+            border: 2px solid #ddd;
+            padding: 10px;
+            display: inline-block;
+            background-color: #fff;
+        }
+
+        img {
+            max-width: 300px;
+            max-height: 300px;
+            margin-top: 10px;
+        }
+
+        .checkbox-container {
+            margin: 20px 0;
+        }
+
+        label {
+            margin: 0 15px;
+            font-size: 18px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .error {
+            color: red;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Choose an Animal and Generate an Image</h1>
+    
+    <div class="checkbox-container">
+        <label><input type="checkbox" id="cat"> კატა</label>
+        <label><input type="checkbox" id="dog"> ძაღლი</label>
+        <label><input type="checkbox" id="fox"> მელა</label>
+    </div>
+
+    <button onclick="generateImage()">Generate Image</button>
+
+    <div id="image-container"></div>
+    <div id="error-message" class="error"></div>
+
+    <script>
+        function generateImage() {
+          
+            document.getElementById('image-container').innerHTML = '';
+            document.getElementById('error-message').innerHTML = '';
+
+            const catChecked = document.getElementById('cat').checked;
+            const dogChecked = document.getElementById('dog').checked;
+            const foxChecked = document.getElementById('fox').checked;
+
+            if (!catChecked && !dogChecked && !foxChecked) {
+                document.getElementById('error-message').innerHTML = 'გთხოვთ აირჩიოთ ცხოველი!';
+                return;
+            }
+
+            const apiUrls = {
+                cat: 'https://api.thecatapi.com/v1/images/search',
+                dog: 'https://dog.ceo/api/breeds/image/random',
+                fox: 'https://randomfox.ca/floof/'
+            };
+
+            let apiUrl = '';
+
+            if (catChecked) {
+                apiUrl = apiUrls.cat;
+            } else if (dogChecked) {
+                apiUrl = apiUrls.dog;
+            } else if (foxChecked) {
+                apiUrl = apiUrls.fox;
+            }
+
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    let imageUrl = '';
+                    if (catChecked) {
+                        imageUrl = data[0].url;
+                    } else if (dogChecked) {
+                        imageUrl = data.message;
+                    } else if (foxChecked) {
+                        imageUrl = data.image;
+                    }
+
+                    const img = document.createElement('img');
+                    img.src = imageUrl;
+                    document.getElementById('image-container').appendChild(img);
+                })
+                .catch(error => {
+                    document.getElementById('error-message').innerHTML = 'შეცდომა სერვერთან: ' + error.message;
+                });
+        }
+    </script>
+</body>
+</html>

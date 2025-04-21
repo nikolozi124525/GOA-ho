@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+  <meta charset="UTF-8">
+  <title>ხუმრობა და რჩევა</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      background: #f4f4f4;
+      padding: 50px;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    button {
+      padding: 12px 24px;
+      margin: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    #display {
+      margin-top: 30px;
+      padding: 20px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      font-size: 18px;
+    }
+
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>ხუმრობა ან რჩევა</h1>
+
+  <button onclick="getJoke()">ხუმრობა</button>
+  <button onclick="getAdvice()">რჩევა</button>
+
+  <div id="display">აქ გამოჩნდება შედეგი</div>
+
+  <script>
+    async function getJoke() {
+      const display = document.getElementById('display');
+      display.textContent = 'იტვირთება...';
+      try {
+        const res = await fetch('https://v2.jokeapi.dev/joke/Any?safe-mode');
+        const data = await res.json();
+        if (data.type === 'single') {
+          display.textContent = data.joke;
+        } else {
+          display.innerHTML = data.setup + '<br><br>' + data.delivery;
+        }
+      } catch (error) {
+        display.innerHTML = '<span class="error">შეცდომა: ' + error.message + '</span>';
+      }
+    }
+
+    async function getAdvice() {
+      const display = document.getElementById('display');
+      display.textContent = 'იტვირთება...';
+      try {
+        const res = await fetch('https://api.adviceslip.com/advice');
+        const data = await res.json();
+        display.textContent = data.slip.advice;
+      } catch (error) {
+        display.innerHTML = '<span class="error">შეცდომა: ' + error.message + '</span>';
+      }
+    }
+  </script>
+
+</body>
+</html>
