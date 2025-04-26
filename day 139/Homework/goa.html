@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>დროის ტაიმერი</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 h-screen flex justify-center items-center">
+
+  <div class="bg-white p-8 rounded-lg shadow-xl">
+    <h1 class="text-2xl font-bold mb-4">დროის მონაკვეთი ამ წლის ფარგლებში</h1>
+    <label for="target-date" class="block text-lg mb-2">შეიყვანეთ თარიღი (მაგ.: 2025-07-15)</label>
+    <input id="target-date" type="date" class="p-2 border border-gray-300 rounded mb-4 w-full">
+    <div id="timer" class="text-3xl font-semibold text-center">
+      დროის მონაკვეთი: <span id="time-left">0d 0h 0m 0s</span>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("target-date").addEventListener("change", function() {
+      const targetDate = new Date(this.value);
+      const currentYear = new Date().getFullYear();
+      targetDate.setFullYear(currentYear);
+
+      function updateTimer() {
+        const now = new Date();
+        const timeDifference = targetDate - now;
+
+        if (timeDifference <= 0) {
+          document.getElementById("time-left").textContent = "დრო დამთავრდა!";
+          return;
+        }
+
+        const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+        document.getElementById("time-left").textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+      }
+
+      setInterval(updateTimer, 1000);
+    });
+  </script>
+
+</body>
+</html>
